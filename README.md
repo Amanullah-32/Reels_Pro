@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 Reel Uploader
 
-## Getting Started
+A simple, full-stack video reel sharing platform built with **Next.js**. This application allows users to register, log in, and upload short video clips (reels) which are processed and served via the ImageKit API.
 
-First, run the development server:
+---
 
-```bash
+## 🚀 Features
+
+*   **User Authentication:** Secure login and registration powered by **NextAuth.js**.
+*   **Video Management:** High-performance video uploads and streaming using the **ImageKit API**.
+*   **Database:** Persistent storage for user profiles and video metadata using **MongoDB**.
+*   **Containerization:** Fully dockerized for consistent development and deployment environments.
+*   **Responsive Design:** Optimized for both desktop and mobile viewing.
+
+---
+
+## 🛠️ Tech Stack
+
+| Component | Technology |
+| :--- | :--- |
+| **Framework** | [Next.js](https://nextjs.org/) (App Router) |
+| **Database** | [MongoDB](https://www.mongodb.com/) |
+| **Auth** | [NextAuth.js](https://next-auth.js.org/) |
+| **Media Hosting** | [ImageKit.io](https://imagekit.io/) |
+| **Containerization** | [Docker](https://www.docker.com/) |
+
+---
+
+## 📋 Prerequisites
+
+Before running the project, ensure you have the following installed:
+*   [Node.js](https://nodejs.org/) (v22+)
+*   [Docker](https://www.docker.com/)
+*   An [ImageKit](https://imagekit.io/) account for API keys.
+*   A [MongoDB](https://www.mongodb.com/atlas/database) connection string.
+
+---
+
+## ⚙️ Setup & Environment Variables
+
+Create a `.env` file in the root directory and add your credentials:
+
+```env
+# NextAuth Configuration
+NEXTAUTH_SECRET=your_secret_here
+
+# MongoDB Configuration
+MONGODB_URI=your_mongodb_connection_uri
+
+# ImageKit Configuration
+NEXT_PUBLIC_PUBLIC_KEY=your_imagekit_public_key
+IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
+NEXT_PUBLIC_URL_ENDPOINT=your_imagekit_url_endpoint
+
+🐳 Running with Docker
+The easiest way to get the project up and running is using Docker.
+
+Build and start the containers:
+
+Bash
+docker build -t nextjs-app .
+docker run -p 3000:3000 --env-file .env.local nextjs-app
+Access the application:
+Open http://localhost:3000 in your browser.
+
+💻 Local Development (Non-Docker)
+Install dependencies:
+
+Bash
+npm install
+Run the development server:
+
+Bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Build for production:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Bash
+npm run build
+npm start
+📂 Project Structure
+/app - Contains the Next.js pages, API routes, and layouts.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+/components - Reusable UI components.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+/lib - Utility functions for MongoDB connection and ImageKit initialization.
 
-## Learn More
+/models - Mongoose schemas for Users and Reels.
 
-To learn more about Next.js, take a look at the following resources:
+Dockerfile - Configuration [
+ARG NEXT_PUBLIC_PUBLIC_KEY=
+ARG NEXT_PUBLIC_URL_ENDPOINT=
+] for containerization.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🛡️ License
+This project is open-source. Feel free to use and modify it as needed.
