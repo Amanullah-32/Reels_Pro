@@ -7,18 +7,22 @@ import { Loader2 } from "lucide-react";
 import { useNotification } from "./Notification";
 import { apiClient } from "@/lib/api-client";
 import FileUpload from "./FileUpload";
+import { useRouter } from "next/navigation";
 
 interface VideoFormData {
   title: string;
   description: string;
   videoUrl: string;
   thumbnailUrl: string;
+  fileId : string
+  owner? : string
 }
 
 export default function VideoUploadForm() {
   const [loading, setLoading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const { showNotification } = useNotification();
+  const router = useRouter()
 
   const {
     register,
@@ -31,12 +35,14 @@ export default function VideoUploadForm() {
       description: "",
       videoUrl: "",
       thumbnailUrl: "",
+      fileId : ""
     },
   });
 
   const handleUploadSuccess = (response: IKUploadResponse) => {
     setValue("videoUrl", response.filePath);
     setValue("thumbnailUrl", response.thumbnailUrl || response.filePath);
+    setValue("fileId", response.fileId)
     showNotification("Video uploaded successfully!", "success");
   };
 
@@ -52,7 +58,8 @@ export default function VideoUploadForm() {
 
     setLoading(true);
     try {
-      await apiClient.createVideo(data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await apiClient.createVideo(data as any);
       showNotification("Video published successfully!", "success");
 
       // Reset form after successful submission
@@ -60,6 +67,7 @@ export default function VideoUploadForm() {
       setValue("description", "");
       setValue("videoUrl", "");
       setValue("thumbnailUrl", "");
+      setValue("fileId","")
       setUploadProgress(0);
     } catch (error) {
       showNotification(
@@ -68,6 +76,7 @@ export default function VideoUploadForm() {
       );
     } finally {
       setLoading(false);
+      router.push("/")
     }
   };
 

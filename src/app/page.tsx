@@ -1,12 +1,12 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import VideoFeed from "../components/VideoFeed";
-import { IVideo } from "@/models/Video";
+import { IPopulatedVideo } from "@/models/Video";
 import { apiClient } from "@/lib/api-client";
 import Header from "@/components/Header";
 
 export default function Home() {
-  const [videos, setVideos] = useState<IVideo[]>([]);
+  const [videos, setVideos] = useState<IPopulatedVideo[]>([]);
 
   useEffect(() => {
     const fetchVideos = async () => {

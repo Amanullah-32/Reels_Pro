@@ -1,8 +1,8 @@
-import { IVideo } from "@/models/Video";
+import { IPopulatedVideo } from "@/models/Video";
 import VideoComponent from "./VideoComponent";
 
 interface VideoFeedProps {
-  videos: IVideo[];
+  videos: IPopulatedVideo[];
 }
 
 export default function VideoFeed({ videos }: VideoFeedProps) {

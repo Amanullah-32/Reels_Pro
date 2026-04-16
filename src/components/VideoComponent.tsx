@@ -1,10 +1,19 @@
+"use client"
 import { IKVideo } from "imagekitio-next";
 import Link from "next/link";
-import { IVideo } from "@/models/Video";
+import { IPopulatedVideo } from "@/models/Video";
+import { useSession } from "next-auth/react";
+import DeleteBtn from "@/components/DeleteBtn"
 
-export default function VideoComponent({ video }: { video: IVideo }) {
+export default function VideoComponent({ video }:{ video: IPopulatedVideo }) {
+  const {data : session} = useSession()
   return (
-    <div className="card bg-base-100 shadow hover:shadow-lg transition-all duration-300">
+    <div className="card bg-base-100 shadow hover:shadow-lg transition-all duration-300 pt-5">
+      <div className="flex justify-center items-center pt-2">
+      <p className="text-sm text-base-content/70 line-clamp-2">
+          Post by :- {video.owner.email}
+        </p>
+        </div>
       <figure className="relative px-4 pt-4">
         <Link href={`/videos/${video._id}`} className="relative group w-full">
           <div
@@ -19,6 +28,9 @@ export default function VideoComponent({ video }: { video: IVideo }) {
                   width: "1080",
                 },
               ]}
+              controlsList="nodownload"
+              onContextMenu={(e) => e.preventDefault()}
+              disablePictureInPicture
               controls={video.controls}
               className="w-full h-full object-cover"
             />
@@ -37,6 +49,9 @@ export default function VideoComponent({ video }: { video: IVideo }) {
         <p className="text-sm text-base-content/70 line-clamp-2">
           {video.description}
         </p>
+        <div>
+          {video.owner._id == session?.user.id ? <DeleteBtn fileId={video.fileId}/> :null}
+        </div>
       </div>
     </div>
   );

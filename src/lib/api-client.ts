@@ -1,4 +1,4 @@
-import { IVideo } from "@/models/Video";
+import { IVideo ,IPopulatedVideo } from "@/models/Video";
 
 export type VideoFormData = Omit<IVideo, "_id">;
 
@@ -34,7 +34,7 @@ class ApiClient {
   }
 
   async getVideos() {
-    return this.fetch<IVideo[]>("/videos");
+    return this.fetch<IPopulatedVideo[]>("/videos");
   }
 
   async getVideo(id: string) {

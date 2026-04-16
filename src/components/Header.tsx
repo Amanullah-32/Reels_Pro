@@ -50,11 +50,11 @@ export default function Header() {
               >
                 {session ? (
                   <>
-                    <li className="px-4 py-1">
-                      <span className="text-sm opacity-70">
+                    <Link href="/profile" className="px-4 py-2 hover:bg-base-200 block w-full">
+                      <span className="text-2xl w-full text-blue-600">
                         {session.user?.email?.split("@")[0]}
                       </span>
-                    </li>
+                    </Link>
                     <div className="divider my-1"></div>
 
                     <li>

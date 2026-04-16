@@ -7,7 +7,7 @@ import Video, { IVideo } from "@/models/Video";
 export async function GET() {
   try {
     await connectToDB();
-    const videos = await Video.find({}).sort({ createdAt: -1 }).lean();
+    const videos = await Video.find({}).populate("owner","email").sort({ createdAt: -1 }).lean();
 
     if (!videos || videos.length === 0) {
       return NextResponse.json([], { status: 200 });
@@ -27,13 +27,13 @@ export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
 
-    if (!session) {
+    if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     await connectToDB();
     const body: IVideo = await request.json();
-    console.log(body)
+    
 
     // Validate required fields
     if (
@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
     // Create new video with default values
     const videoData = {
       ...body,
+      owner : session.user.id,
       controls: body.controls ?? true,
       transformation: {
         height: 1920,
