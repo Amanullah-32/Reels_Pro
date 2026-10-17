@@ -33,9 +33,9 @@ export interface IVideo{
         width: number;
         quality?: number;
       };
-    owner: mongoose.Types.ObjectId;
-    likes : [mongoose.Types.ObjectId]
-    comments : []
+    owner?: mongoose.Types.ObjectId;
+    likes? : [mongoose.Types.ObjectId]
+    comments? : []
 }
 
 const commentSchema = new Schema({
